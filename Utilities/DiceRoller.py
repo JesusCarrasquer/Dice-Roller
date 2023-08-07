@@ -6,6 +6,18 @@ def rollDice(faces):
 def rollD20():
     return random.randint(1,20)
 
+def createTemplate(dices):
+    template = ''
+    for key in dices:
+        template += dices[key]
+        if not key == 0:
+            template += 'd'
+            template += key
+        template += '+'
+    return template[:-1]
+
+        
+
 def readTemplate(template):
     if not template[0].isdigit():
         raise Exception('El patrón debe de empezar por un numero')
@@ -18,7 +30,6 @@ def readTemplate(template):
         while(i<len(template) and template[i].isdigit()):
             tempnum += template[i]
             i+=1
-        print(tempnum)
         if i == len(template):
             if 0 in dados:
                 dados[0] = int(tempnum) + dados[0]
