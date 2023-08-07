@@ -6,6 +6,22 @@ def rollDice(faces):
 def rollD20():
     return random.randint(1,20)
 
+def rollDices(dices):
+    value = 0
+    log = ''
+    for key in dices:
+        if key == 0:
+            value += dices[key]
+            log += str(dices[key])
+            log += '+'
+        else:
+            for i in range(0,dices[key]):
+                rolledValue = rollDice(key)
+                value += rolledValue
+                log += str(rolledValue)
+                log += '+'
+    return [value,log[:-1]]
+
 def createTemplate(dices):
     template = ''
     for key in dices:

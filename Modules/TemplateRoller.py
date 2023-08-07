@@ -20,6 +20,9 @@ def startModule():
         dadosTirados = dr.readTemplate(template)
     except Exception as e:
         print(str(e))
+    resultados = dr.rollDices(dadosTirados)
+    print('El resultado de los dados es:', resultados[0])
+    print('Resultado detallado:', resultados[1])
 
     input('Pulsa cualquier tecla para continuar...')
     
