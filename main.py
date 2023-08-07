@@ -1,10 +1,12 @@
 import Utilities.SystemUtilities as ut
 import Modules.TemplateRoller as o1
+import Modules.RollLoader as o2
 
 def printMenu():
     print('Escoge lo que quieres hacer hoy')
     print('0. Salir')
     print('1. Tirar dados con un molde establecido')
+    print('2. Cargar tirada guardada')
 
 game = True
 while(game):
@@ -25,7 +27,8 @@ while(game):
             ut.stopProgram()
         case 1:
             o1.startModule()
-
+        case 2:
+            o2.startModule()
         case _:
             print('No se ha encontrado la opción', selection)
             

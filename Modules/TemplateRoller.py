@@ -24,7 +24,21 @@ def startModule():
     print('El resultado de los dados es:', resultados[0])
     print('Resultado detallado:', resultados[1])
 
-    input('Pulsa cualquier tecla para continuar...')
+    save = input('¿Deseas guardar la tirada en memoria para otras ocasiones? (Y/N)')
+    if save == 'Y' or save == 'y':
+        fileDesc = input('Introduce el nombre que le quieres dar a la tirada:')
+        exists = True
+        fileSave = None
+        while exists:
+            try:
+                fileSave = open('Memory/'+fileDesc+'.txt','x')
+                exists = False
+            except FileExistsError:
+                print('Ya existe una tirada con ese nombre, intenta con otro')
+        fileSave.write(template)
+        fileSave.close()
+        input('Tirada guardada con éxito, presiona enter para continuar')
+
     
     
 

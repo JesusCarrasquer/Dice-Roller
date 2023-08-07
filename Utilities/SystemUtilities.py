@@ -11,3 +11,6 @@ def clearConsole():
         os.system('cls')
     elif getCurrentOS() == 'Linux':
         os.system('clear')
+
+def listSaved():
+    return os.listdir('./Memory')
