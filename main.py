@@ -18,12 +18,14 @@ while(game):
             validated = True
         except:
             print('Error, debes de introducir un numero...')
+            selection = input('Introduce aquí tu elección -> ')
     match selection:
         case 0:
             print('Saliendo del programa...')
             ut.stopProgram()
         case 1:
             o1.startModule()
+
         case _:
             print('No se ha encontrado la opción', selection)
             

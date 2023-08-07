@@ -1,4 +1,5 @@
 import Utilities.SystemUtilities as ut
+import Utilities.DiceRoller as dr
 
 def printHelp():
     ut.clearConsole();
@@ -9,11 +10,18 @@ def printHelp():
 def askInput():
     ut.clearConsole()
     return input('Introduce el patrón de dados a tirar o "Help" para una guia:\n ')
-
-
+            
 def startModule():
     template = askInput()
     while(template == 'Help'):
         printHelp()
         template = askInput()
+    try:
+        dadosTirados = dr.readTemplate(template)
+    except Exception as e:
+        print(str(e))
+
+    input('Pulsa cualquier tecla para continuar...')
+    
+    
 
