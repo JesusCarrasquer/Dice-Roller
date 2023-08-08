@@ -1,12 +1,14 @@
 import Utilities.SystemUtilities as ut
 import Modules.TemplateRoller as o1
 import Modules.RollLoader as o2
+import Modules.SpellRoller as o3
 
 def printMenu():
     print('Escoge lo que quieres hacer hoy')
     print('0. Salir')
     print('1. Tirar dados con un molde establecido')
     print('2. Cargar tirada guardada')
+    print('3. Usar un hechizo de 5e')
 
 game = True
 while(game):
@@ -29,6 +31,8 @@ while(game):
             o1.startModule()
         case 2:
             o2.startModule()
+        case 3:
+            o3.startModule()
         case _:
-            print('No se ha encontrado la opción', selection)
+            input('No se ha encontrado la opción ' + str(selection) + ', Pulsa enter para continuar...')
             
