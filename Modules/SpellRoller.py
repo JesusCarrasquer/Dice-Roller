@@ -56,6 +56,8 @@ def startModule():
                 validated = True
             except ValueError:
                 attackCheck = input('Error, debes introducir "Y" para tirar ataque o "N" para tirar daño directamente\n')
+        
+        #TIRADA DE ATAQUE
         if attackCheck == 'y' or attackCheck == 'Y':
             spellModifier = input('¿Cual es tu modificador de ataque de hechizo?\n')
             validated = False
@@ -73,6 +75,7 @@ def startModule():
             else:
                 print('Tu tirada de ataque ha salido ' + str(attackRoll) + ', sumandole el modificador se obtiene ' + str(attackRoll+spellModifier))
             
+            #GUARDADO DE TIRADA DE ATAQUE
             save = input('¿Deseas guardar la tirada en memoria para otras ocasiones? (Y/N)\n')
             if save == 'Y' or save == 'y':
                 fileDesc = input('Introduce el nombre que le quieres dar a la tirada: ')
@@ -88,6 +91,68 @@ def startModule():
                 fileSave.close()
                 print('Tirada guardada con exito')
         
+    #TIRADA DE DAÑO
+
+    damageDices = None
+    if 'damage_at_character_level' in spellDetails['damage']:
+        #DAÑO DEPENDIENTE DE NIVEL
+        selectedLevelInt = input('¿Que nivel es tu personaje?\n ')
+        validated = False
+        while not validated:
+            try:
+                selectedLevelInt = int(selectedLevelInt)
+                if selectedLevelInt < 1:
+                    raise ValueError()
+                validated = True
+            except ValueError:
+                selectedLevelInt = input('Error, debes introducir un numero correcto y superior a 0')
+        leveldamages = spellDetails['damage']['damage_at_character_level']
+        maxLevel = 0
+        for level in leveldamages:
+            if int(level) > maxLevel and int(level) < selectedLevelInt:
+                maxLevel = int(level)
+            damageDices = leveldamages[str(maxLevel)]
+
+    elif 'damage_at_slot_level' in spellDetails['damage']:
+        #DAÑO DEPENDIENTE DE RANURA
+        slots = spellDetails['damage']['damage_at_slot_level']
+        print(slots)
+        selectedSlotInt = input('¿Que ranura usas para el hechizo?\n')
+        validated = False
+        while not validated:
+            try:
+                if not selectedSlotInt in slots:
+                    raise ValueError()
+                validated = True
+            except ValueError:
+                selectedLevelInt = input('Error, debes introducir una ranura correcta')
+        damageDices = slots[str(selectedSlotInt)]
+    else:
+        print('El hechizo no tiene tiradas de daño')
+        input('Presiona enter para continuar...')
+        return
+    #TIRANDO EL DAÑO
+    damageDices = damageDices.replace(" ","")
+    damageRoll = dr.readTemplate(damageDices)
+    formattedDices = dr.rollDices(damageRoll)
+    print('El resultado de los dados es:', formattedDices[0])
+    print('Resultado detallado:', formattedDices[1])
+    #GUARDADO DE TIRADA DE DAÑO
+    save = input('¿Deseas guardar la tirada de daño en memoria para otras ocasiones? (Y/N)\n')
+    if save == 'Y' or save == 'y':
+        fileDesc = input('Introduce el nombre que le quieres dar a la tirada: ')
+        exists = True
+        fileSave = None
+        while exists:
+            try:
+                fileSave = open('Memory/'+fileDesc+'.txt','x')
+                exists = False
+            except FileExistsError:
+                print('Ya existe una tirada con ese nombre, intenta con otro')
+        fileSave.write('1d20+' + str(spellModifier))
+        fileSave.close()
+        print('Tirada guardada con exito')
+    
 
 
 
